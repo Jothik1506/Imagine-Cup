@@ -1002,7 +1002,14 @@ body.sidebarCollapsed.sidebarHoverExpanded .browserSidebar {
   /* Capped rather than 80% of the viewport: a full-width pill on a wide
      window leaves the caret stranded far from the placeholder text. */
   max-width: 620px;
+  /* position:relative alone doesn't create a stacking context - without an
+     explicit z-index here, the child .searchSuggestions dropdown's z-index
+     only matters *inside* this box. .quickApps is a later flex sibling with
+     no z-index of its own, so it still painted on top of the dropdown,
+     making the suggestion list look like it rendered *behind* the shortcut
+     icons instead of covering them. */
   position: relative;
+  z-index: 20;
   display: flex;
   align-items: center;
   background: rgba(18, 24, 21, 0.62);
